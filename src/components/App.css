@@ -1,0 +1,58 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #ed2e13  ;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+.movie-posters {
+  display: grid;
+  list-style: none;
+  grid-gap: 3rem;
+}
+@media screen and (min-width:320px) {
+  .movie-posters {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+@media screen and (min-width:640px) {
+  .movie-posters {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+.movie-poster {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  padding-bottom: 7rem;
+}
+.movie-poster:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.movie-poster img {
+  width: 50%;
+  margin: auto;
+}
+
+.button {
+  display: block;
+  margin: auto;
+}
+@keyframes App-logo-spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
