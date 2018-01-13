@@ -108,11 +108,22 @@ class App extends Component {
   // }
 
   render() {
+    const posters = this.state.posters;
     const logout = <button onClick={this.logout}>Log Out</button>;
-    // if (Object.keys(this.state.posters).length !== 0 && this.state.posters.constructor === Object) {
-    //   console.log(this.state.posters)
-    //
-    // }
+    let voteLimit = false;
+    if (Object.keys(posters).length !== 0 && posters.constructor === Object) {
+      // console.log(this.state.posters)
+      const userVoteTotal = Object.keys(posters).reduce((prev, curr) => {
+        if (typeof(posters[curr].votes) === 'undefined') {
+          return prev;
+        }
+        const votes = posters[curr].votes;
+        const matchingVotes = Object.keys(votes).filter((vote) => votes[vote] === this.state.user.uid);
+        return prev + matchingVotes.length;
+      }, 0);
+      voteLimit = userVoteTotal > 2 ? true : false;
+    }
+
     // Prompt login
     if(!this.state.user) {
       return <div>{this.renderLogin()}</div>
@@ -147,12 +158,3 @@ class App extends Component {
 }
 
 export default App;
-
-// const userVoteTotal = Object.keys(this.state.posters).reduce((prev, curr) => {
-//   if (this.state.user) {
-//     const votes = countItemsValues(this.state.posters[curr].votes, this.state.user.uid);
-//     console.log(votes);
-//     return prev + votes;
-//   }
-// }, 0);
-// console.log(userVoteTotal);
