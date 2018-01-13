@@ -12,8 +12,14 @@ class Poster extends React.Component {
 
   render() {
     // const button = '';
-    const voteButton = <button className="button" onClick={()=>{this.props.voteForPoster(this.props.index)}}>Vote for this Poster</button>
-    const total = this.props.details.votes ? Object.keys(this.props.details.votes).reduce((prev, curr) => prev + 1, 0) : null;
+    console.log(this.props.voteLimit);
+    const voteButton = !this.props.voteLimit ?
+      <button className="button" onClick={()=>{this.props.voteForPoster(this.props.index)}}>Vote for this Poster</button> :
+      null;
+
+    const total = this.props.details.votes && this.props.voteLimit ?
+      <p>Total Votes: {Object.keys(this.props.details.votes).reduce((prev, curr) => prev + 1, 0)}</p> :
+      null;
     // if (this.props.details. < 4) {
     //   const button = <button className="button" onClick={()=>{this.props.voteForPoster(this.props.index)}}>Vote for this Poster</button>
     // }
@@ -22,7 +28,7 @@ class Poster extends React.Component {
       <h2>{this.props.details.name}</h2>
       <img src={this.props.details.image} alt='poster'/>
       {voteButton}
-      <p>Total Votes: {total}</p>
+      {total}
     </li>);
   }
 }

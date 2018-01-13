@@ -149,6 +149,7 @@ class App extends Component {
                 user={this.state.user}
                 details={this.state.posters[key]}
                 voteForPoster={this.voteForPoster}
+                voteLimit={voteLimit}
               />)
           }
         </ul>
