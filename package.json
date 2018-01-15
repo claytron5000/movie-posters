@@ -1,9 +1,11 @@
 {
   "name": "movie-posters",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "homepage": "https://github.com/claytron5000/movie-posters",
   "dependencies": {
     "firebase": "^4.8.2",
+    "gh-pages": "^1.1.0",
     "re-base": "^2.2.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -16,6 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
   }
 }

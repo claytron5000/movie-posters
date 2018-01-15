@@ -47,10 +47,129 @@
   width: 50%;
   margin: auto;
 }
-
 .button {
   display: block;
   margin: auto;
+}
+.btn {
+  color: #fff;
+  background-color: #ed2e13;
+  text-align: center;
+  letter-spacing: .5px;
+  -webkit-transition: .2s ease-out;
+  transition: .2s ease-out;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  display: block;
+  height: 3rem;
+  line-height: 36px;
+  padding: 0 2rem;
+  /* text-transform: uppercase; */
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+.btn:hover {
+  background-color: #f43924;
+  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
+}
+.btn-flat {
+  box-shadow: none;
+  background-color: transparent;
+  color: #ed2e13;
+  border: none;
+  border-radius: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 2rem;
+  text-transform: uppercase;
+}
+.App-header .btn {
+  color: #ed2e13;
+  /* border: solid 2px #ed2e13; */
+  background-color: white;
+  font-weight: bold;
+}
+.add-poster {
+  position: relative;
+}
+.add-poster {
+  height: 33vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right:  0;
+  background: white;
+  box-shadow: 0 -6px 21px 0px rgba(0,0,0,0.125), 0 3px 9px 2px rgba(0,0,0,0.14);
+  transition: all 0.5s;
+}
+.add-poster.closed {
+  transform: translateY(33vh);
+}
+.toggle {
+  background: white;
+  color: #ed2e13;
+  border-radius: 2px 2px 0 0;
+  top: -3rem;
+  left: 2rem;
+  position: absolute;
+  box-shadow: 0 -10px 18px -2px rgba(0,0,0,0.125), 0 -6px 6px 0px rgba(0,0,0,0.14);
+}
+.toggle:hover {
+  background: white;
+  color: #f43924;
+  box-shadow: 0 -10px 18px -2px rgba(0,0,0,0.125), 0 -6px 6px 0px rgba(0,0,0,0.14);
+}
+.toggle:focus {
+  outline: 0;
+  /* IE10+ */
+  background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #D0CCCC 500%);
+
+  /* Mozilla Firefox */
+  background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #D0CCCC 500%);
+
+  /* Opera */
+  background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #D0CCCC 500%);
+
+  /* Webkit (Safari/Chrome 10) */
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FFFFFF), color-stop(500, #D0CCCC));
+
+  /* Webkit (Chrome 11+) */
+  background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #D0CCCC 500%);
+
+  /* W3C Markup */
+  background-image: linear-gradient(to top, #FFFFFF 0%, #D0CCCC 500%);
+}
+.toggle:focus {
+  font-weight: bold;
+}
+.toggle .toggle-icon {
+  position: relative
+}
+.toggle .toggle-icon:before {
+  content: '';
+  display: block;
+  width: 2rem;
+  height: 0.125rem;
+  background-color: #ed2e13;
+  position: absolute;
+  top: 0;
+  left: -0.925rem;
+}
+.toggle .toggle-icon:after {
+  content: '';
+  display: block;
+  width: 0.125rem;
+  height: 2rem;
+  background-color: #ed2e13;
+  position: absolute;
+  top: -1rem;
+  left: 0;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(360deg); }
