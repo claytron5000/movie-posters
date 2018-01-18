@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import logo from '../images/camera-diaphragm.svg';
-import './App.css';
+import './style/App.css';
 import Poster from './Poster';
 import samplePosters from '../sampleposters';
 import base from '../base';
-import { countItemsValues } from '../helpers';
+import { extractVotes } from '../helpers';
 import Form from './Form';
 import User from './User';
 
@@ -32,7 +32,7 @@ class App extends Component {
     });
     this.ref = base.syncState(`users`, {
       context: this,
-      state: 'activeUser'
+      state: 'users'
     });
   }
 
@@ -47,6 +47,16 @@ class App extends Component {
   //   //     voteLimit: true
   //   //   })
   //   // }
+  // }
+  // componentDidUpdate(prevProps, prevState) {
+  //
+  //   const user = prevState.activeUser || null;
+  //   const posters = prevState.posters || null;
+  //   console.log('Posters: ', posters);
+  //   console.log('User: ', user);
+  //   this.setState({
+  //     posters: posters
+  //   });
   // }
 
   loadDefault() {
@@ -75,14 +85,17 @@ class App extends Component {
       console.log(err);
       return;
     }
-    console.log(authData.user);
-    console.log(authData.user.displayName)
     const displayName = authData.user.displayName;
     const uid = authData.user.uid;
+    const voteCount = extractVotes(uid, this.state.posters).length;
+
     this.setState({
-      activeUser: {
-        uid: uid,
-        displayName: displayName
+      users: {
+        [uid]: {
+          uid: uid,
+          displayName: displayName,
+          voteCount: voteCount
+        }
       }
     });
   }
@@ -90,17 +103,17 @@ class App extends Component {
   logout() {
     base.unauth();
     this.setState({
-      activeUser: null
+      users: null
     });
     this.setState({
-      activeUser: null
+      users: null
     });
   }
 
   voteForPoster(key) {
     const posters = {...this.state.posters};
     const timestamp = Date.now();
-    const user = {...this.state.activeUser};
+    const user = Object.values(this.state.users)[0];
 
     if (posters[key].hasOwnProperty('votes')) {
         posters[key]['votes'][`${timestamp}`] = user.uid;
@@ -108,7 +121,18 @@ class App extends Component {
     else {
       posters[key]['votes'] = {[`${timestamp}`]: user.uid};
     }
+    // Count number of votes by uid.
+    const voteCount = user.voteCount || 0;
+    if (voteCount > 5) {
+      return;
+    }
+    else {
+      user.voteCount = voteCount + 1;
+    }
 
+    const users = {[user.uid]: user};
+    // This tells me I should start using redux or other state managment lib
+    this.setState({ users });
     this.setState({ posters })
   }
 
@@ -120,36 +144,23 @@ class App extends Component {
   }
 
   render() {
-    const posters = this.state.posters;
-    const logout = <button className="btn" onClick={this.logout}>Log Out</button>;
-    let voteLimit = false;
-    // if (Object.keys(posters).length !== 0 && posters.constructor === Object) {
-    //   // console.log(this.state.posters)
-    //   const userVoteTotal = Object.keys(posters).reduce((prev, curr) => {
-    //     if (typeof(posters[curr].votes) === 'undefined') {
-    //       return prev;
-    //     }
-    //     const votes = posters[curr].votes;
-    //     const matchingVotes = Object.keys(votes).filter((vote) => votes[vote] === this.state.user.uid);
-    //     return prev + matchingVotes.length;
-    //   }, 0);
-    //   voteLimit = userVoteTotal > 2 ? true : false;
-    // }
 
     // Prompt login
-    if(!this.state.activeUser) {
+    if(!this.state.users ) {
       return <div>{this.renderLogin()}</div>
     }
-
+    console.log(this.state);
+    const voteLimit = Object.values(this.state.users)[0].voteCount >= 5;
+    const user =  Object.values(this.state.users)[0];
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Movie Posters Voting</h1>
-          <p>Vote three times for your favorite movie posters for the dev room.</p>
-          <User user={this.state.activeUser}/>
-          {logout}
-          <button className="btn" onClick={()=>this.loadDefault()}>Load Default Posters</button>
+          <User user={user} logout={this.logout}/>
+          <div className="header-info">
+            <h1 className="App-title">Movie Posters Voting</h1>
+            <p>Vote for your favorite movie posters for the dev room.</p>
+          </div>
         </header>
         <ul className="movie-posters">
           {
@@ -159,7 +170,6 @@ class App extends Component {
               <Poster
                 key={key}
                 index={key}
-                user={this.state.activeUser}
                 details={this.state.posters[key]}
                 voteForPoster={this.voteForPoster}
                 voteLimit={voteLimit}

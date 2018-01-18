@@ -1,0 +1,21 @@
+.userCard {
+  position: absolute;
+  top: 0;
+  right: 1rem;
+  text-align: right;
+}
+.userCard p {
+  margin-bottom: 0;
+}
+.userCard .btn {
+  box-shadow: none;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: right;
+  text-transform: none;
+  display: inline;
+}

@@ -2,7 +2,7 @@
   "name": "movie-posters",
   "version": "0.1.0",
   "private": false,
-  "homepage": "https://github.com/claytron5000/movie-posters",
+  "homepage": "https://claytron5000.github.io/movie-posters/",
   "dependencies": {
     "firebase": "^4.8.2",
     "gh-pages": "^1.1.0",
@@ -10,6 +10,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-google-login": "^3.0.4",
+    "react-modal": "^3.1.11",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17"

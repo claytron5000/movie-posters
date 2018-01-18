@@ -1,4 +1,7 @@
 import React from 'react';
+import Button from './Button';
+import ToggleButton from './ToggleButton';
+import './style/Form.css';
 
 class Form extends React.Component {
   constructor() {
@@ -6,39 +9,44 @@ class Form extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.createPoster = this.createPoster.bind(this);
     this.state = {
-      isClosed: true
+      isClosed: false
     }
   }
 
   createPoster(event) {
     event.preventDefault();
-    console.log(this.title);
     const poster = {
       title: this.title.value,
       image: this.image.value
-    }
+    };
     this.props.addNewPoster(poster);
+    this.posterForm.reset();
   }
 
   toggle() {
+    console.log('asdfasdfa');
     this.setState({
       isClosed: !this.state.isClosed
     })
   }
 
   render() {
-    const toggle = this.state.isClosed ? "closed" : "open";
+    const toggle = !this.state.isClosed ? "open" : "closed";
     return (
       <div className={`add-poster ${toggle}`}>
-        <button className="toggle btn" onClick={()=>this.toggle()}><span className="toggle-icon"></span></button>
+        <ToggleButton btnClass="toggle" handleClick={this.toggle}/>
         <form ref={(input) => this.posterForm = input} onSubmit={(e) => this.createPoster(e)}>
-          <label htmlFor="title">Movie Title</label>
-          <input ref={input => this.title = input} type="text" id="title" />
-          <label htmlFor="image">Link to Image</label>
-          <input ref={input => this.image = input} type="text" id="image" />
+          <Button btnClass="btn-raised" label="Add Poster"/>
+          <div className="input-fam">
+            <label htmlFor="title">Movie Title</label>
+            <input ref={input => this.title = input} type="text" id="title" />
+          </div>
+          <div className="input-fam">
+            <label htmlFor="image">Link to Image</label>
+            <input ref={input => this.image = input} type="text" id="image" />
+          </div>
           {/* <label for="link">Link to purchase</label>
           <input type="text" name="link" /> */}
-          <button type="submit" className="submit btn">Add Poster</button>
         </form>
       </div>
     )

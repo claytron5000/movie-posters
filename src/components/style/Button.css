@@ -1,0 +1,51 @@
+
+.btn {
+  color: #fff;
+  background-color: #ed2e13;
+  text-align: center;
+  letter-spacing: .5px;
+  -webkit-transition: .2s ease-out;
+  transition: .2s ease-out;
+  cursor: pointer;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  display: block;
+  height: 3rem;
+  line-height: 36px;
+  padding: 0 2rem;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+}
+.btn:hover {
+  background-color: #f43924;
+  box-shadow: 0 3px 3px 0 rgba(0,0,0,0.14), 0 1px 7px 0 rgba(0,0,0,0.12), 0 3px 1px -1px rgba(0,0,0,0.2);
+}
+
+.btn-flat {
+  box-shadow: none;
+  background-color: transparent;
+  color: #ed2e13;
+  border: none;
+  border-radius: 2px;
+  font-size: 1rem;
+  cursor: pointer;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 2rem;
+  text-transform: uppercase;
+}
+.btn-flat:hover {
+  box-shadow: none;
+}
+.btn-flat.disabled {
+  cursor: inherit;
+  color: white;
+  background-color: lightgray;
+}
+.btn-flat.disabled:hover, .btn-flat.disabled:focus {
+  background-color: lightgray;
+  color: white;
+}

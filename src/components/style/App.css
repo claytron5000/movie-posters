@@ -1,0 +1,51 @@
+.App {
+  text-align: center;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+.App-header {
+  background-color: #ed2e13  ;
+  padding: 1rem;
+  color: white;
+  margin-bottom: 3rem;
+}
+.App-title {
+  font-size: 1.5em;
+}
+.App-intro {
+  font-size: large;
+}
+.movie-posters {
+  display: grid;
+  list-style: none;
+  grid-gap: 3rem;
+  margin-bottom: 42vh;
+}
+@media screen and (min-width:320px) {
+  .movie-posters {
+    grid-template-columns: 1fr;
+  }
+}
+@media screen and (min-width:640px) {
+  .movie-posters {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+.App-header .btn {
+  color: #ed2e13;
+  /* border: solid 2px #ed2e13; */
+  background-color: white;
+  font-weight: bold;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+body.ReactModal__Body--open {
+  overflow: hidden;
+}

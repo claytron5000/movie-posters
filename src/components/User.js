@@ -1,4 +1,6 @@
 import  React from 'react';
+import Button from './Button';
+import './style/User.css';
 
 class User extends React.Component {
   constructor() {
@@ -6,9 +8,15 @@ class User extends React.Component {
   }
 
   render() {
+    if (!this.props.user) {
+      return null;
+    }
+    const votesRemaining = this.props.user.voteCount ? 5 - this.props.user.voteCount : 5;
     return(
       <div className="userCard">
-        <p>Welcome, {this.props.user.displayName}</p>
+        <p>Welcome, <span>{this.props.user.displayName}</span></p>
+        <Button btnClass='btn-flat' label='Log Out' handleClick={this.props.logout}/>
+        <p>Votes Remaining: {votesRemaining}</p>
       </div>
     );
   }
