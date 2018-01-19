@@ -34,9 +34,9 @@ class App extends Component {
     const userKey = Object.keys(window.localStorage)
       .filter(it => it.startsWith('firebase:authUser'))[0];
     const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : false;
-    console.log(user);
+
     if (user) {
-      this.ref = base.syncState(`users/${user.uid}`, {
+      base.syncState(`users/${user.uid}`, {
         context: this,
         state: 'user'
       });
@@ -64,14 +64,17 @@ class App extends Component {
     const displayName = authData.user.displayName;
     const uid = authData.user.uid;
     const voteCount = extractVotes(uid, this.state.posters).length;
+    const user = {
+      uid: uid,
+      displayName: displayName,
+      voteCount: voteCount
+    };
+    console.log(user);
+    this.setState({ user });
 
-    this.setState({
-      user:
-      {
-        uid: uid,
-        displayName: displayName,
-        voteCount: voteCount
-      }
+    base.syncState(`users/${user.uid}`, {
+      context: this,
+      state: 'user'
     });
   }
 

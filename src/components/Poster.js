@@ -58,7 +58,8 @@ class Poster extends React.Component {
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
           style={customStyles}
-          contentLabel={this.props.details.title}>
+          contentLabel={this.props.details.title}
+          appElement={document.getElementsByClassName('App')[0]}>
           <div className="modal-wrap">
             <ToggleButton btnClass="toggle" handleClick={this.closeModal}/>
             <img src={this.props.details.image} alt={`${this.props.details.title} movie poster`}/>
