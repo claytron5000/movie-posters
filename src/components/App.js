@@ -30,34 +30,18 @@ class App extends Component {
       context: this,
       state: 'posters'
     });
-    this.ref = base.syncState(`users`, {
-      context: this,
-      state: 'users'
-    });
-  }
+    const userKey = Object.keys(window.localStorage)
+      .filter(it => it.startsWith('firebase:authUser'))[0];
+    const user = userKey ? JSON.parse(localStorage.getItem(userKey)) : false;
+    console.log(user);
+    if (user) {
+      this.ref = base.syncState(`users/${user.uid}`, {
+        context: this,
+        state: 'user'
+      });
+    }
 
-  // componentWillReceiveProps(nextProps ) {
-  //   // @TODO the user or voting button should be it's own component so that I can pass it props and this trigger componentWillReceiveProps
-  //   // The App maybe never hits this method
-  //   console.log(nextProps)
-  //   // const user = this.state.user || {};
-  //   // const voteCount = countTotalUserVotes(this.state.posters, user.uid);
-  //   // if (voteCount > 2) {
-  //   //   this.setState({
-  //   //     voteLimit: true
-  //   //   })
-  //   // }
-  // }
-  // componentDidUpdate(prevProps, prevState) {
-  //
-  //   const user = prevState.activeUser || null;
-  //   const posters = prevState.posters || null;
-  //   console.log('Posters: ', posters);
-  //   console.log('User: ', user);
-  //   this.setState({
-  //     posters: posters
-  //   });
-  // }
+  }
 
   loadDefault() {
     this.setState({
@@ -90,49 +74,50 @@ class App extends Component {
     const voteCount = extractVotes(uid, this.state.posters).length;
 
     this.setState({
-      users: {
-        [uid]: {
-          uid: uid,
-          displayName: displayName,
-          voteCount: voteCount
-        }
+      user:
+      {
+        uid: uid,
+        displayName: displayName,
+        voteCount: voteCount
       }
     });
   }
 
   logout() {
     base.unauth();
+    // This bug I cannot figure out.
     this.setState({
-      users: null
+      user: null
     });
-    this.setState({
-      users: null
-    });
+    // this.setState({
+    //   users: null
+    // });
   }
 
   voteForPoster(key) {
     const posters = {...this.state.posters};
     const timestamp = Date.now();
-    const user = Object.values(this.state.users)[0];
+    const votingUser = this.state.user;
 
     if (posters[key].hasOwnProperty('votes')) {
-        posters[key]['votes'][`${timestamp}`] = user.uid;
+        posters[key]['votes'][`${timestamp}`] = votingUser.uid;
     }
     else {
-      posters[key]['votes'] = {[`${timestamp}`]: user.uid};
+      posters[key]['votes'] = {[`${timestamp}`]: votingUser.uid};
     }
     // Count number of votes by uid.
-    const voteCount = user.voteCount || 0;
+    const voteCount = votingUser.voteCount || 0;
     if (voteCount > 5) {
       return;
     }
     else {
-      user.voteCount = voteCount + 1;
+      votingUser.voteCount = voteCount + 1;
     }
 
-    const users = {[user.uid]: user};
+    const user = votingUser;
+    console.log(user);
     // This tells me I should start using redux or other state managment lib
-    this.setState({ users });
+    this.setState({ user });
     this.setState({ posters })
   }
 
@@ -144,14 +129,14 @@ class App extends Component {
   }
 
   render() {
-
     // Prompt login
-    if(!this.state.users ) {
+    if(!this.state.user || Object.keys(this.state.user).length === 0) {
       return <div>{this.renderLogin()}</div>
     }
-    console.log(this.state);
-    const voteLimit = Object.values(this.state.users)[0].voteCount >= 5;
-    const user =  Object.values(this.state.users)[0];
+
+    const user = this.state.user;
+    const voteLimit = user.voteCount >= 5;
+
     return (
       <div className="App">
         <header className="App-header">
