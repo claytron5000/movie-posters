@@ -36,9 +36,17 @@
 
 .App-header .btn {
   color: #ed2e13;
-  /* border: solid 2px #ed2e13; */
+  margin: auto;
   background-color: white;
   font-weight: bold;
+}
+.App-header .btn:hover {
+  background-color: white;
+  transform: translateY(-1px);
+}
+.App-header .btn-flat.btn:hover {
+  background-color: #ed2e13;
+  transform: none;
 }
 
 @keyframes App-logo-spin {

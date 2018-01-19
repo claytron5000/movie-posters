@@ -7,7 +7,8 @@ import samplePosters from '../sampleposters';
 import base from '../base';
 import { extractVotes } from '../helpers';
 import Form from './Form';
-import User from './User';
+import Header from './Header';
+import Login from "./Login";
 
 class App extends Component {
 
@@ -15,7 +16,7 @@ class App extends Component {
     super();
     this.voteForPoster = this.voteForPoster.bind(this);
     this.loadDefault = this.loadDefault.bind(this);
-    this.renderLogin = this.renderLogin.bind(this);
+    this.authenticate = this.authenticate.bind(this);
     this.authHandler = this.authHandler.bind(this);
     this.logout = this.logout.bind(this);
     this.addNewPoster = this.addNewPoster.bind(this);
@@ -49,15 +50,6 @@ class App extends Component {
     })
   }
 
-  renderLogin() {
-    return (
-      <nav className="login">
-        <h2>Log in</h2>
-        <p>Sign in to vote for your favorite Movie Posters.</p>
-        <button className="google" onClick={() => this.authenticate('google')} >Login in with Google</button>
-      </nav>
-    )
-  }
 
   authenticate(provider) {
     console.log('Trying to log in with ' + provider);
@@ -131,22 +123,14 @@ class App extends Component {
   render() {
     // Prompt login
     if(!this.state.user || Object.keys(this.state.user).length === 0) {
-      return <div>{this.renderLogin()}</div>
+      return <Login authenticate={this.authenticate}/>
     }
-
     const user = this.state.user;
     const voteLimit = user.voteCount >= 5;
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <User user={user} logout={this.logout}/>
-          <div className="header-info">
-            <h1 className="App-title">Movie Posters Voting</h1>
-            <p>Vote for your favorite movie posters for the dev room.</p>
-          </div>
-        </header>
+        <Header user={user} logout={this.logout}/>;
         <ul className="movie-posters">
           {
             Object
@@ -157,7 +141,7 @@ class App extends Component {
                 index={key}
                 details={this.state.posters[key]}
                 voteForPoster={this.voteForPoster}
-                voteLimit={voteLimit}
+                 voteLimit={voteLimit}
               />)
           }
         </ul>

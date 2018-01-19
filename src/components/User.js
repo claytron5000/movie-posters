@@ -13,11 +13,14 @@ class User extends React.Component {
     }
     const votesRemaining = this.props.user.voteCount ? 5 - this.props.user.voteCount : 5;
     return(
-      <div className="userCard">
-        <p>Welcome, <span>{this.props.user.displayName}</span></p>
-        <Button btnClass='btn-flat' label='Log Out' handleClick={this.props.logout}/>
-        <p>Votes Remaining: {votesRemaining}</p>
-      </div>
+
+        <div className="userCard">
+          <p>Welcome, <span>{this.props.user.displayName}</span></p>
+          <Button btnClass='btn-flat' label='Log Out' handleClick={this.props.logout}/>
+          <p>Votes Remaining: {votesRemaining}</p>
+        </div>
+
+
     );
   }
 }
