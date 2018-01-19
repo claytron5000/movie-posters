@@ -14,9 +14,14 @@
 }
 .add-poster form {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 100%;
   grid-column-gap: 3rem;
+}
+@media screen and (min-width: 640px) {
+  .add-poster form {
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 1fr 1fr;
+  }
 }
 .add-poster form label {
   display: block;
